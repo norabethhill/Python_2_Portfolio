@@ -5305,7 +5305,1932 @@ for alignment in blast_record.alignments:
 In this section, we looked at computer vision for phenotyping. Computer Vision helps us process images with Python to write a script for measurements. 
 
 
+```python
+import numpy as np
+import matplotlib.pyplot as plt
+%matplotlib inline
+```
+
+
+```python
+import cv2
+```
+
+
+```python
+# Open CV is another package we will use for phenomics 
+# Computer vision helps us process imqges with python to write a script for measurements 
+```
+
+
+```python
+img = cv2.imread("Puppy.jpg")
+```
+
+
+```python
+type(img)
+```
+
+
+
+
+    numpy.ndarray
+
+
+
+
+```python
+# This is a path that does not exist 
+img_wrong = cv2.imread('wrong/path/doesnot/abcdegh.jpg')
+```
+
+
+```python
+type(img_wrong)
+```
+
+
+
+
+    NoneType
+
+
+
+
+```python
+# NoneType means we have loaded an incorrect image; this is important to check for
+```
+
+
+```python
+# This will give us our image
+plt.imshow(img)
+```
+
+
+
+
+    <matplotlib.image.AxesImage at 0x7fac54c09cd0>
+
+
+
+
+![output_8_1](https://github.com/norabethhill/Python_2_Portfolio/assets/132499791/a249d795-ba2f-4f5c-91fa-b276b32cae17)
+
+
+
+```python
+# The picture turn blue bc the package we are using expects a different order of colors, but we can change this
+fix_img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
+```
+
+
+```python
+plt.imshow(fix_img)
+```
+
+
+
+
+    <matplotlib.image.AxesImage at 0x7fac51b3d250>
+
+
+
+
+![output_10_1](https://github.com/norabethhill/Python_2_Portfolio/assets/132499791/a3a8e522-c7a5-4d2a-bc7f-582808cfb5d3)
+
+
+
+
+```python
+# Now the image is fixed 
+```
+
+
+```python
+# We can also make gray images
+img_gray = cv2.imread("Puppy.jpg", cv2.IMREAD_GRAYSCALE)
+img_gray.shape
+```
+
+
+
+
+    (3888, 5184)
+
+
+
+
+```python
+plt.imshow(img_gray)
+```
+
+
+
+
+    <matplotlib.image.AxesImage at 0x7fac51ab2590>
+
+
+
+
+![output_13_1](https://github.com/norabethhill/Python_2_Portfolio/assets/132499791/4729a5d2-42aa-4e85-8172-2691b73b4baa)
+
+
+
+
+```python
+plt.imshow(img_gray, cmap = "gray")
+```
+
+
+
+
+    <matplotlib.image.AxesImage at 0x7fac51a22550>
+
+
+
+
+![output_14_1](https://github.com/norabethhill/Python_2_Portfolio/assets/132499791/847845f7-c0ab-4d3b-ad26-6ea196c3c0f9)
+
+
+
+
+```python
+# Gray scale images have less information in them 
+```
+
+
+```python
+# We can also resize our images 
+fix_img.shape 
+```
+
+
+
+
+    (3888, 5184, 3)
+
+
+
+
+```python
+# Those are the number of pixels 
+```
+
+
+```python
+new_img = cv2.resize(fix_img, (1000,400))
+plt.imshow(new_img)
+```
+
+
+
+
+    <matplotlib.image.AxesImage at 0x7fac51a14290>
+
+
+
+
+![output_18_1](https://github.com/norabethhill/Python_2_Portfolio/assets/132499791/9c233204-3007-419b-9450-95303c2fc7e9)
+
+
+
+
+```python
+# Now we have stretched our image out 
+new_img.shape
+```
+
+
+
+
+    (400, 1000, 3)
+
+
+
+
+```python
+w_ratio = 0.5
+h_ratio = 0.5
+
+new_img = cv2.resize(fix_img, (0,0), fix_img, w_ratio, h_ratio)
+```
+
+
+```python
+# Now the scale will be different
+plt.imshow(new_img)
+```
+
+
+
+
+    <matplotlib.image.AxesImage at 0x7fac51973210>
+
+
+
+
+![output_21_1](https://github.com/norabethhill/Python_2_Portfolio/assets/132499791/a981a910-719c-44d5-8b63-9f5dbff336fd)
+
+
+
+
+```python
+new_img.shape
+```
+
+
+
+
+    (1944, 2592, 3)
+
+
+
+
+```python
+# The 0.5 ratio cuts our image in half
+```
+
+
+```python
+# We can also flip images 
+flip_img = cv2.flip(fix_img, 0)
+plt.imshow(flip_img)
+```
+
+
+
+
+    <matplotlib.image.AxesImage at 0x7fac518e2290>
+
+
+
+
+![output_24_1](https://github.com/norabethhill/Python_2_Portfolio/assets/132499791/1d3f1148-49db-4b94-a8cc-aa584023ed61)
+
+
+
+
+```python
+# Now the image has been flipped vertically
+```
+
+
+```python
+flip_img2 = cv2.flip(fix_img, -1)
+plt.imshow(flip_img)
+```
+
+
+
+
+    <matplotlib.image.AxesImage at 0x7fac518d2090>
+
+
+
+
+![output_26_1](https://github.com/norabethhill/Python_2_Portfolio/assets/132499791/9c79d0b2-815b-45b3-81f3-c4df4877b552)
+
+
+
+
+```python
+type(fix_img)
+```
+
+
+
+
+    numpy.ndarray
+
+
+
+
+```python
+cv2.imwrite('Puppy_fixed_image.jpg', flip_img)
+```
+
+
+
+
+    True
+
+
+
+
+```python
+# True means that it is right 
+```
+
+
+```python
+# It does not save the color convert, only the image manipulation 
+```
+
+
+```python
+import cv2
+import matplotlib.pyplot as plt
+%matplotlib inline 
+```
+
+
+```python
+img = cv2.imread("Puppy.jpg")
+```
+
+
+```python
+plt.imshow(img)
+# The image will be blue again
+```
+
+
+
+
+    <matplotlib.image.AxesImage at 0x7fac51843090>
+
+
+
+
+![output_33_1](https://github.com/norabethhill/Python_2_Portfolio/assets/132499791/9fd087a0-dbca-4a84-9ee4-092886e5b6f3)
+
+
+
+
+```python
+# Now we have to convert the colors 
+img1 = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
+```
+
+
+```python
+plt.imshow(img1)
+```
+
+
+
+
+    <matplotlib.image.AxesImage at 0x7fac4ddfae50>
+
+
+
+
+![output_35_1](https://github.com/norabethhill/Python_2_Portfolio/assets/132499791/6cab6542-694d-47d1-8604-dd5490dc19ba)
+
+
+
+
+```python
+# Now we have our colors fixed 
+img2 = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)
+# HSV formats are a bit older 
+```
+
+
+```python
+plt.imshow(img2)
+# HSV stands for Hue, Saturation, and Value
+```
+
+
+
+
+    <matplotlib.image.AxesImage at 0x7fac4dde7b10>
+
+
+
+
+![output_37_1](https://github.com/norabethhill/Python_2_Portfolio/assets/132499791/79480b2b-7cf6-4541-99a2-ae060f0fd3e1)
+
+
+
+
+```python
+img3 = cv2.cvtColor(img, cv2.COLOR_BGR2HLS)
+```
+
+
+```python
+plt.imshow(img3)
+```
+
+
+
+
+    <matplotlib.image.AxesImage at 0x7fac4dd27f10>
+
+
+
+
+![output_39_1](https://github.com/norabethhill/Python_2_Portfolio/assets/132499791/fea78973-9c84-489e-933a-83c1780c7839)
+
+
+
+
+```python
+# This is the HLS image 
+```
+
+
+```python
+# Now we are using another image 
+img1 = cv2.imread('DNC.jpg')
+img2 = cv2.imread("Puppy.jpg")
+```
+
+
+```python
+plt.imshow(img1)
+```
+
+
+
+
+    <matplotlib.image.AxesImage at 0x7fac4dc34d90>
+
+
+
+
+![output_42_1](https://github.com/norabethhill/Python_2_Portfolio/assets/132499791/95047b70-ca10-4c5d-b5ed-57008206aae8)
+
+
+
+
+```python
+img1 = cv2.cvtColor(img1, cv2.COLOR_BGR2RGB)
+img2 = cv2.cvtColor(img2, cv2.COLOR_BGR2RGB)
+```
+
+
+```python
+plt.imshow(img1)
+```
+
+
+
+
+    <matplotlib.image.AxesImage at 0x7fac4dc16e90>
+
+
+
+
+![output_44_1](https://github.com/norabethhill/Python_2_Portfolio/assets/132499791/29db5bcd-b746-48f3-9224-93472f45c1a5)
+
+
+
+
+```python
+plt.imshow(img2)
+```
+
+
+
+
+    <matplotlib.image.AxesImage at 0x7fac4db7af90>
+
+
+
+
+![output_45_1](https://github.com/norabethhill/Python_2_Portfolio/assets/132499791/fbae1e5e-832a-4050-bc58-0e36a83ab01c)
+
+
+
+
+```python
+# Now we are resizing the images
+img1 = cv2.resize(img1,(1200,1200))
+img2 = cv2.resize(img2,(1200, 1200))
+```
+
+
+```python
+alpha = 0.5
+beta = 0.5
+```
+
+
+```python
+blended = cv2.addWeighted(img1, alpha, img2, beta, gamma=0)
+```
+
+
+```python
+plt.imshow(blended)
+```
+
+
+
+
+    <matplotlib.image.AxesImage at 0x7fac4a1a8e50>
+
+
+
+
+![output_49_1](https://github.com/norabethhill/Python_2_Portfolio/assets/132499791/272d5f62-349e-4390-b047-ff5c23a443ec)
+
+
+
+
+```python
+# We have over ran the 2 images 
+# This is very important for microscopy and fluoresence image overlay 
+```
+
+
+```python
+alpha = 0.8
+beta = 0.2
+
+blended1 = cv2.addWeighted(img1, alpha, img2, beta, 0)
+plt.imshow(blended1)
+```
+
+
+
+
+    <matplotlib.image.AxesImage at 0x7fac4a1174d0>
+
+
+
+
+![output_51_1](https://github.com/norabethhill/Python_2_Portfolio/assets/132499791/51c76143-a8e2-4cb1-8d0a-5e585846880e)
+
+
+
+
+```python
+# Now the Do Not Copy is much darker and the puppies are much lighter 
+```
+
+
+```python
+# We can also flip the alpha and beta values to reverse which is darker 
+```
+
+
+```python
+# We can try blending with different image sizes 
+img1 = cv2.imread('DNC.jpg')
+img2 = cv2.imread('Puppy.jpg')
+
+img1 = cv2.cvtColor(img1, cv2.COLOR_BGR2RGB)
+img2 = cv2.cvtColor(img2, cv2.COLOR_BGR2RGB)
+
+img1 = cv2.resize(img1, (200,200))
+```
+
+
+```python
+large_img = img2
+small_img = img1
+
+x_offset = 0
+y_offset = 0
+
+x_end = x_offset + small_img.shape[1]
+y_end = y_offset + small_img.shape[0]
+
+large_img[y_offset:y_end, x_offset:x_end] = small_img
+
+plt.imshow(large_img)
+```
+
+
+
+
+    <matplotlib.image.AxesImage at 0x7fac4a08b090>
+
+
+
+
+![output_55_1](https://github.com/norabethhill/Python_2_Portfolio/assets/132499791/80becdcc-8767-4292-8313-ad2cd601e3d6)
+
+
+
+
+```python
+# https://github.com/worklifesg/Python-for-Computer-Vision-with-OpenCV-and-Deep-Learning
+```
+
+
+```python
+# We will be working with new images
+```
+
+
+```python
+import cv2
+import matplotlib.pyplot as plt
+%matplotlib inline 
+```
+
+
+```python
+img = cv2.imread('rainbow.jpg')
+```
+
+
+```python
+plt.imshow(img)
+```
+
+
+
+
+    <matplotlib.image.AxesImage at 0x7fac49ff3550>
+
+
+
+
+![output_60_1](https://github.com/norabethhill/Python_2_Portfolio/assets/132499791/e22d94f1-e3d3-4f4b-9efe-d707619d1bb9)
+
+
+
+
+```python
+# Now we are going to do some thresholding 
+img = cv2.imread('rainbow.jpg', 0)
+```
+
+
+```python
+plt.imshow(img, cmap = 'gray')
+# This will make the rainbow gray 
+```
+
+
+
+
+    <matplotlib.image.AxesImage at 0x7fac49fdb190>
+
+
+
+
+![output_62_1](https://github.com/norabethhill/Python_2_Portfolio/assets/132499791/48b010a5-da43-462d-87c3-a85d1c6113df)
+
+
+
+
+```python
+ret1, thresh1 = cv2.threshold(img, 127, 255, cv2.THRESH_BINARY)
+```
+
+
+```python
+ret1
+```
+
+
+
+
+    127.0
+
+
+
+
+```python
+plt.imshow(thresh1, cmap = 'gray')
+```
+
+
+
+
+    <matplotlib.image.AxesImage at 0x7fac49f35e10>
+
+
+
+
+![output_65_1](https://github.com/norabethhill/Python_2_Portfolio/assets/132499791/a0fa9683-3fda-4466-b8b3-48737379939a)
+
+
+
+
+```python
+# Everything lighter turns white and anything darker turns black bc of our threshold
+```
+
+
+```python
+# We can also inverse the limits 
+img2 = cv2.imread('rainbow.jpg', 0)
+ret1, thresh1 = cv2.threshold(img2, 127, 255, cv2.THRESH_TRUNC)
+plt.imshow(thresh1, cmap = "gray")
+```
+
+
+
+
+    <matplotlib.image.AxesImage at 0x7fac49f19d90>
+
+
+
+
+![output_67_1](https://github.com/norabethhill/Python_2_Portfolio/assets/132499791/b6d5bc60-4391-47a8-9d2e-0f7f008a40c8)
+
+
+
+
+```python
+img3 = cv2.imread('rainbow.jpg', 0)
+ret1, thresh1 = cv2.threshold(img3, 127, 255, cv2.THRESH_TOZERO)
+plt.imshow(thresh1, cmap = "gray")
+```
+
+
+
+
+    <matplotlib.image.AxesImage at 0x7fac49e7c8d0>
+
+
+
+
+![output_68_1](https://github.com/norabethhill/Python_2_Portfolio/assets/132499791/81de9b78-6ec5-4290-942e-97c7bea8a476)
+
+
+
+
+```python
+img_r = cv2.imread('crossword.jpg', 0)
+plt.imshow(img_r, cmap = 'gray')
+```
+
+
+
+
+    <matplotlib.image.AxesImage at 0x7fac49e60150>
+
+
+
+
+![output_69_1](https://github.com/norabethhill/Python_2_Portfolio/assets/132499791/3d6cb9f9-b0fc-4b0c-a366-7c8208f0265c)
+
+
+
+
+```python
+def show_pic(img):
+    fig = plt.figure(figsize = (15,15))
+    ax = fig.add_subplot(111)
+    ax.imshow(img, cmap = 'gray')
+```
+
+
+```python
+show_pic(img_r)
+```
+
+
+![output_71_0](https://github.com/norabethhill/Python_2_Portfolio/assets/132499791/7b9e755d-471a-44e4-af1e-a8223d960e24)
+
+
+
+
+```python
+ret, th1 = cv2.threshold(img_r, 127, 255, cv2.THRESH_BINARY)
+show_pic(th1)
+```
+
+
+![output_72_0](https://github.com/norabethhill/Python_2_Portfolio/assets/132499791/31f7d9e5-269b-4f45-ae96-59fa454ed07e)
+
+
+
+
+```python
+# We are turning the picture to just black on white
+```
+
+
+```python
+ret, th1 = cv2.threshold(img_r, 200, 255, cv2.THRESH_BINARY)
+show_pic(th1)
+```
+
+
+![output_74_0](https://github.com/norabethhill/Python_2_Portfolio/assets/132499791/85b0aceb-ae4b-4265-813c-ba17947838d4)
+
+
+
+
+```python
+th2 = cv2.adaptiveThreshold(img_r, 255, cv2.ADAPTIVE_THRESH_MEAN_C, cv2.THRESH_BINARY, 11, 8)
+```
+
+
+```python
+show_pic(th2)
+```
+
+
+![output_76_0](https://github.com/norabethhill/Python_2_Portfolio/assets/132499791/d696bd95-d68c-45b1-8991-a1044d7fbcb9)
+
+
+
+
+```python
+# We can blend this to do different thresholds 
+blended = cv2.addWeighted(src1 = th1, alpha = 0.6,
+                          src2 = th2, beta = 0.4, gamma = 0)
+
+show_pic(blended)
+```
+
+
+![output_77_0](https://github.com/norabethhill/Python_2_Portfolio/assets/132499791/16a1af93-4461-4920-b157-962d62d85e03)
+
+
+
+
+```python
+# We layered th2 under th1 
+```
+
+
+```python
+th3 = cv2.adaptiveThreshold(img_r, 255, cv2.ADAPTIVE_THRESH_MEAN_C, cv2.THRESH_BINARY, 11, 8)
+
+blended = cv2.addWeighted(src1 = th1, alpha = 0.6,
+                          src2 = th2, beta = 0.4, gamma=0)
+
+show_pic(blended)
+```
+
+
+![output_79_0](https://github.com/norabethhill/Python_2_Portfolio/assets/132499791/a8e9b5b6-0356-4c54-b033-4fc2cde93146)
+
+
+
+
+```python
+# Essentially we have removed background
+```
+
+
+## Corner Detection 
+
+In this section, we analyzed methods for determining corners in images. 
+
+
+
+
+```python
+# We are using computer vision to detect features 
+```
+
+
+```python
+import cv2
+import numpy as np
+import matplotlib.pyplot as plt 
+%matplotlib inline 
+```
+
+
+```python
+# This is for the green chessboard
+flat_chess = cv2.imread('Chessboard_green.png')
+flat_chess = cv2.cvtColor(flat_chess, cv2.COLOR_BGR2RGB)
+plt.imshow(flat_chess)
+```
+
+
+
+
+    <matplotlib.image.AxesImage at 0x7fed243884d0>
+
+
+
+
+![output_2_1](https://github.com/norabethhill/Python_2_Portfolio/assets/132499791/f5afad89-8ab1-4b9e-a364-4043d95f0df3)
+
+
+
+
+```python
+# Now we will turn the green chessboard to gray 
+gray_flat_chess = cv2.cvtColor(flat_chess, cv2.COLOR_BGR2GRAY)
+plt.imshow(gray_flat_chess, cmap = "gray")
+```
+
+
+
+
+    <matplotlib.image.AxesImage at 0x7fed242d0350>
+
+
+
+
+![output_3_1](https://github.com/norabethhill/Python_2_Portfolio/assets/132499791/8fb45e31-0828-4374-b68b-6aeeb2631e01)
+
+
+
+
+```python
+# This gray scale chessboard will be our template 
+```
+
+
+```python
+# Now we will plot our real chessboard
+```
+
+
+```python
+real_chess = cv2.imread("Chessboard.jpg")
+real_chess = cv2.cvtColor(real_chess, cv2.COLOR_BGR2RGB)
+```
+
+
+```python
+plt.imshow(real_chess)
+```
+
+
+
+
+    <matplotlib.image.AxesImage at 0x7fed1fb559d0>
+
+
+
+
+![output_7_1](https://github.com/norabethhill/Python_2_Portfolio/assets/132499791/cdb72d58-f9b7-42d7-a89e-263cb790b645)
+
+
+
+
+```python
+# Now we will convert the real chessbpard to grayscale
+```
+
+
+```python
+gray_real_chess = cv2.cvtColor(real_chess, cv2.COLOR_BGR2GRAY)
+plt.imshow(gray_real_chess, cmap = 'gray')
+```
+
+
+
+
+    <matplotlib.image.AxesImage at 0x7fed1fb43ed0>
+
+
+
+
+![output_9_1](https://github.com/norabethhill/Python_2_Portfolio/assets/132499791/1ba7fcb7-17cc-4e3b-85a3-6d3894c0742e)
+
+
+
+
+```python
+gray = np.float32(gray_flat_chess)
+dst = cv2.cornerHarris(src = gray, blockSize = 2, ksize = 3, k = 0.04)
+
+dst = cv2.dilate(dst, None)
+```
+
+
+```python
+# Above is the corner Harris method
+```
+
+
+```python
+flat_chess[dst>0.01*dst.max()] = [255,0,0]
+
+plt.imshow(flat_chess)
+```
+
+
+
+
+    <matplotlib.image.AxesImage at 0x7fed1fab8410>
+
+
+
+
+![output_12_1](https://github.com/norabethhill/Python_2_Portfolio/assets/132499791/7b59d665-5af9-4dfe-85a4-349a18490f28)
+
+
+
+
+```python
+# Now anytime a corner is detected, it will become red
+```
+
+
+```python
+# Now we will use the corner detection on a real chessboard
+```
+
+
+```python
+gray = np.float32(gray_real_chess)
+dst = cv2.cornerHarris(src = gray, blockSize = 2, ksize = 3, k=0.04)
+dst = cv2.dilate(dst, None)
+
+real_chess[dst>0.01*dst.max()] = [255, 0, 0]
+
+plt.imshow(real_chess)
+
+```
+
+
+
+
+    <matplotlib.image.AxesImage at 0x7fed1fa19c90>
+
+
+
+
+![output_15_1](https://github.com/norabethhill/Python_2_Portfolio/assets/132499791/9c025dd3-789b-4123-96e4-1e0b7f6a2117)
+
+
+
+
+```python
+# Now we will use the Shi-Tomasi Corner detection method 
+```
+
+
+```python
+corners = cv2.goodFeaturesToTrack(gray_flat_chess, 64, 0.01, 10)
+
+```
+
+
+```python
+corners = np.int0(corners)
+
+for i in corners:
+    x,y = i.ravel()
+    cv2.circle(flat_chess, (x,y),3,(255,0,0), -1)
     
+plt.imshow(flat_chess)
+```
+
+
+
+
+    <matplotlib.image.AxesImage at 0x7fed1f985e10>
+
+
+
+
+![output_18_1](https://github.com/norabethhill/Python_2_Portfolio/assets/132499791/ef3aded4-4d45-4fd9-a6d9-fcc2f6c56196)
+
+
+
+
+```python
+# 49 corners have been detected 
+```
+
+
+```python
+# Now we will do the Shi-Tomasi method on the real chessboard
+
+corners = cv2.goodFeaturesToTrack(gray_real_chess, 100, 0.01, 10)
+
+corners = np.int0(corners)
+
+for i in corners:
+    x, y = i.ravel()
+    cv2.circle(real_chess, (x,y), 3, (0,255,0), -1)
+    
+plt.imshow(real_chess)
+```
+
+
+
+
+    <matplotlib.image.AxesImage at 0x7fed1f979210>
+
+
+
+
+![output_20_1](https://github.com/norabethhill/Python_2_Portfolio/assets/132499791/54f2e1f6-7425-4ff5-b4e0-54475bb0f6d0)
+
+
+
+
+```python
+# This is an overlap of the two chessboards 
+```
+
+## Edge Detection 
+
+In this analysis, we looked at ways to define and detect edges in biological data. 
+
+
+```python
+import cv2
+```
+
+
+```python
+import numpy as np
+```
+
+
+```python
+import matplotlib.pyplot as plt
+%matplotlib inline 
+```
+
+
+```python
+# I will be using the puppy image
+img = cv2.imread("Puppy.jpg")
+plt.imshow(img)
+```
+
+
+
+
+    <matplotlib.image.AxesImage at 0x7fc7ccf70b10>
+
+
+
+
+![output_3_1](https://github.com/norabethhill/Python_2_Portfolio/assets/132499791/5424811f-8da2-4728-b552-af33984fc786)
+
+
+
+
+```python
+# For edge detection, we do not need to convert the colors
+```
+
+
+```python
+edges = cv2.Canny(image =img, threshold1 = 127, threshold2 = 127)
+
+plt.imshow(edges)
+```
+
+
+
+
+    <matplotlib.image.AxesImage at 0x7fc7cc63cf10>
+
+
+
+
+![output_5_1](https://github.com/norabethhill/Python_2_Portfolio/assets/132499791/203054af-c5ae-4b5f-b27d-ad840548a3a2)
+
+
+
+
+```python
+med_value = np.median(img)
+med_value
+```
+
+
+
+
+    107.0
+
+
+
+
+```python
+# 107 is our median value 
+```
+
+
+```python
+# Now we are changing the threshold limits 
+
+lower = int(max(0, 0.7*med_value))
+upper = int(min(255,1.3*med_value))
+
+edges = cv2.Canny(img, threshold1 = lower, threshold2 = upper)
+
+plt.imshow(edges)
+```
+
+
+
+
+    <matplotlib.image.AxesImage at 0x7fc7cc5bc7d0>
+
+
+
+
+![output_8_1](https://github.com/norabethhill/Python_2_Portfolio/assets/132499791/f86dd182-d81e-49eb-ac2f-1c8de8be08b5)
+
+
+
+
+```python
+edges = cv2.Canny(image = img, threshold1 = lower, threshold2 = upper +100)
+
+plt.imshow(edges)
+```
+
+
+
+
+    <matplotlib.image.AxesImage at 0x7fc7cc5310d0>
+
+
+
+
+![output_9_1](https://github.com/norabethhill/Python_2_Portfolio/assets/132499791/f747d652-d94d-4952-b24f-2d2a03a6210f)
+
+
+
+
+```python
+# Now we will work with blurring 
+
+blurred_img = cv2.blur(img, ksize = (5,5))
+
+edges = cv2.Canny(image=blurred_img,
+                 threshold1 = lower,
+                 threshold2 = upper)
+
+plt.imshow(edges)
+```
+
+
+
+
+    <matplotlib.image.AxesImage at 0x7fc7cc512fd0>
+
+
+
+
+![output_10_1](https://github.com/norabethhill/Python_2_Portfolio/assets/132499791/f4a33786-090d-4a43-a9a3-f88628770af7)
+
+
+
+
+```python
+# We can also try increasing the kernel size; we are changing it from 5 to 7
+
+blurred_img = cv2.blur(img, ksize = (7,7))
+
+edges = cv2.Canny(image=blurred_img,
+                 threshold1 = lower,
+                 threshold2 = upper)
+
+plt.imshow(edges)
+```
+
+
+
+
+    <matplotlib.image.AxesImage at 0x7fc7cc486d10>
+
+
+
+
+![output_11_1](https://github.com/norabethhill/Python_2_Portfolio/assets/132499791/31b81b0f-2e47-46f2-bd85-48449d605401)
+
+
+
+
+```python
+# Now we are increasing the upper threshold limit by 50
+
+blurred_img = cv2.blur(img, ksize = (5,5))
+
+edges = cv2.Canny(image=blurred_img,
+                 threshold1 = lower,
+                 threshold2 = upper + 50)
+
+plt.imshow(edges)
+```
+
+
+
+
+    <matplotlib.image.AxesImage at 0x7fc7cc3f4ad0>
+
+
+
+
+![output_12_1](https://github.com/norabethhill/Python_2_Portfolio/assets/132499791/45b12504-c00b-483a-bc58-47c26c44697a)
+
+
+
+
+```python
+# We are now increasing the upper limit by 100
+
+blurred_img = cv2.blur(img, ksize = (5,5))
+
+edges = cv2.Canny(image=blurred_img,
+                 threshold1 = lower,
+                 threshold2 = upper + 100)
+
+plt.imshow(edges)
+```
+
+
+
+
+    <matplotlib.image.AxesImage at 0x7fc7cc3e3810>
+
+
+
+
+![output_13_1](https://github.com/norabethhill/Python_2_Portfolio/assets/132499791/8d882f1a-8d57-4bdc-b569-ccae8e43d1f4)
+
+
+
+
+```python
+# Now we are changing kernel size and the upper limit 
+
+blurred_img = cv2.blur(img, ksize = (7,7))
+
+edges = cv2.Canny(image=blurred_img,
+                 threshold1 = lower,
+                 threshold2 = upper + 100)
+
+plt.imshow(edges)
+```
+
+
+
+
+    <matplotlib.image.AxesImage at 0x7fc7cc357550>
+
+
+
+
+![output_14_1](https://github.com/norabethhill/Python_2_Portfolio/assets/132499791/d1a0dad8-038d-434b-9bd7-3e7516a0d79b)
+
+
+
+
+```python
+blurred_img = cv2.blur(img, ksize = (7,7))
+
+edges = cv2.Canny(image=blurred_img,
+                 threshold1 = lower,
+                 threshold2 = upper + 75)
+
+plt.imshow(edges)
+```
+
+
+
+
+    <matplotlib.image.AxesImage at 0x7fc7cc2c62d0>
+
+
+
+
+![output_15_1](https://github.com/norabethhill/Python_2_Portfolio/assets/132499791/7e2937b3-9419-4a73-be4b-aa4e4191b9c3)
+
+
+
+
+```python
+blurred_img = cv2.blur(img, ksize = (3,3))
+
+edges = cv2.Canny(image=blurred_img,
+                 threshold1 = lower,
+                 threshold2 = upper)
+
+plt.imshow(edges)
+```
+
+
+
+
+    <matplotlib.image.AxesImage at 0x7fc7cc2aaf90>
+
+
+
+
+![output_16_1](https://github.com/norabethhill/Python_2_Portfolio/assets/132499791/a725e108-3f25-421b-a3fa-015105eef118)
+
+
+
+
+```python
+blurred_img = cv2.blur(img, ksize = (2,2))
+
+edges = cv2.Canny(image=blurred_img,
+                 threshold1 = lower,
+                 threshold2 = upper - 100)
+
+plt.imshow(edges)
+```
+
+
+
+
+    <matplotlib.image.AxesImage at 0x7fc7cc219d50>
+
+
+
+
+![output_17_1](https://github.com/norabethhill/Python_2_Portfolio/assets/132499791/ba1ca37a-b009-4413-81de-af698222acdf)
+
+
+
+
+```python
+# You have to play around with kernel size and threshold values to find what works best for your image 
+```
+
+
+```python
+# On my image smaller kernel sizes and subtracting from the upper limit gave me better results 
+```
+
+
+## Object Detection 
+
+In this section, we used object detection via Open CV for phenotyping purposes. 
+
+
+
+```python
+import cv2
+```
+
+
+```python
+import numpy as np
+```
+
+
+```python
+import matplotlib.pyplot as plt 
+```
+
+
+```python
+%matplotlib inline 
+```
+
+
+```python
+# The training sunflower is one singular flower and the testing sunflower is a field of sunflowers
+```
+
+
+```python
+# We are loading our training flower
+full = cv2.imread('Training_sunflower.jpeg')
+```
+
+
+```python
+# We are converting the color for training 
+
+full = cv2.cvtColor(full, cv2.COLOR_BGR2RGB)
+```
+
+
+```python
+plt.imshow(full)
+# This will show the photo in the right colors
+```
+
+
+
+
+    <matplotlib.image.AxesImage at 0x7f13e1e18690>
+
+
+
+
+![output_7_1](https://github.com/norabethhill/Python_2_Portfolio/assets/132499791/dffc1272-9476-448f-8afd-9e1e0db00a8c)
+
+
+
+
+```python
+# Now we will upload the testing sunflower image 
+
+test = cv2.imread('Searching_sunflower.jpeg')
+```
+
+
+```python
+test = cv2.cvtColor(test, cv2.COLOR_BGR2RGB)
+```
+
+
+```python
+plt.imshow(test)
+```
+
+
+
+
+    <matplotlib.image.AxesImage at 0x7f13e15af410>
+
+
+
+
+![output_10_1](https://github.com/norabethhill/Python_2_Portfolio/assets/132499791/fdc8f728-eecd-4bac-9637-2e9db46865b6)
+
+
+
+
+```python
+# This is our searching/testing image with multiple sunflowers 
+```
+
+
+```python
+print("Test image shape:", full.shape)
+print("Training image shape", test.shape)
+```
+
+    Test image shape: (1329, 1200, 3)
+    Training image shape (413, 612, 3)
+
+
+
+```python
+methods = ['cv2.TM_CCOEFF', 'cv2.TM_CCOEFF_NORMED', 'cv2.TM_CCORR', 'cv2.TM_CCORR_NORMED', 'cv2.TM_SQDIFF', 'cv2.TM_SQDIFF_NORMED']
+# These are all of the different methods we will try 
+```
+
+
+```python
+for m in methods:
+    
+    test_copy = test.copy()
+    method = eval(m)
+    
+    res = cv2.matchTemplate(test_copy, full, method)
+    
+    min_val, max_val, min_loc, max_loc = cv2.minMaxLoc(res)
+    
+    if method in [cv2.TM_SQDIFF, cv2.TM_SQDIFF_NORMED]:
+        top_left = min_loc
+    else:
+        top_left = max_loc 
+        
+    height, width, channels = full.shape
+    bottom_right = (top_left[0] + width, top_left[1] + height)
+    
+    cv2.rectangle(test_copy, top_left, bottom_right, (255,0,0),10)
+    
+    plt.subplot(121)
+    plt.imshow(res)
+    plt.title("Heatmap of template matching")
+    plt.subplot(122)
+    plt.imshow(test_copy)
+    plt.title('Detection of template')
+    
+    plt.suptitle(m)
+    
+    plt.show()
+    print('\n')
+    print('\n')
+```
+
+
+![output_14_0](https://github.com/norabethhill/Python_2_Portfolio/assets/132499791/b57b0850-6bb2-4d94-b299-42b5aa26fae1)
+
+
+
+    
+    
+    
+    
+
+
+
+![output_14_2](https://github.com/norabethhill/Python_2_Portfolio/assets/132499791/dac5a763-9837-43cb-a4b4-a67334efef26)
+
+
+
+    
+    
+    
+    
+
+
+
+![output_14_4](https://github.com/norabethhill/Python_2_Portfolio/assets/132499791/c700dcdf-4285-4f6f-a2dc-65654594be42)
+
+
+
+    
+    
+    
+    
+
+
+
+![output_14_6](https://github.com/norabethhill/Python_2_Portfolio/assets/132499791/b7c13978-4551-4b03-935c-19a0ab8b77eb)
+
+
+
+    
+    
+    
+    
+
+
+
+![output_14_8](https://github.com/norabethhill/Python_2_Portfolio/assets/132499791/f744f78b-2510-496b-b0a2-08008cb778d0)
+
+
+
+    
+    
+    
+    
+
+
+
+![output_14_10](https://github.com/norabethhill/Python_2_Portfolio/assets/132499791/7a149c1f-aa2b-40e6-af40-e51f39d21776)
+
+
+
+    
+    
+    
+    
+
+
+
+```python
+# It is making a heatmap of the input image to detect the sunflower heads 
+```
+
+
+## Feature Matching 
+
+
+Feature method is useful for sorting through data to find specific objects. 
+
+
+```python
+import cv2
+import numpy as np 
+import matplotlib.pyplot as plt
+%matplotlib inline 
+```
+
+
+```python
+def display(img, cmap = 'gray'):
+    fig = plt.figure(figsize = (12,10))
+    ax = fig.add_subplot(111)
+    ax.imshow(img, cmap = 'gray')
+```
+
+
+```python
+# We are going to be identifying cereals from a collage 
+```
+
+
+```python
+apple_jacks = cv2.imread("Apple_jacks.jpeg", 0)
+display(apple_jacks)
+
+# This is for just the Apple Jacks box
+```
+
+
+![output_3_0](https://github.com/norabethhill/Python_2_Portfolio/assets/132499791/310db89f-f3f8-441d-9aac-e53d6dc1633e)
+
+
+
+
+```python
+cereals = cv2.imread('All_cereals.jpeg', 0)
+display(cereals)
+
+# This is for the cereal collage 
+```
+
+
+![output_4_0](https://github.com/norabethhill/Python_2_Portfolio/assets/132499791/06d7e3d3-e680-4625-acb8-fde97c3b0ff5)
+
+
+
+
+```python
+# The first method we will do is brute force matching 
+
+orb = cv2.ORB_create()
+
+kp1,des1 = orb.detectAndCompute(apple_jacks, mask=None)
+kp2,des2 = orb.detectAndCompute(cereals, mask=None)
+```
+
+
+```python
+# Now we will run the bruce force matching 
+
+bf = cv2.BFMatcher(cv2.NORM_HAMMING, crossCheck = True)
+matches = bf.match(des1, des2)
+```
+
+
+```python
+matches = sorted(matches, key = lambda x:x.distance)
+```
+
+
+```python
+apple_jacks_matches = cv2.drawMatches(apple_jacks, kp1, cereals, kp2, matches[:25], None, flags = 2)
+```
+
+
+```python
+display(apple_jacks_matches)
+```
+
+
+![output_9_0](https://github.com/norabethhill/Python_2_Portfolio/assets/132499791/95f2fdb9-80bc-4b60-afe6-ada07b367a91)
+
+
+
+
+```python
+# This method is not the best for matching just apple jacks 
+```
+
+
+```python
+sift = cv2.SIFT_create()
+```
+
+
+```python
+kp1, des1 = sift.detectAndCompute(apple_jacks, None)
+kp2, des2 = sift.detectAndCompute(cereals, None)
+```
+
+
+```python
+# Now we will use brute force with the sift method 
+
+bf = cv2.BFMatcher()
+matches = bf.knnMatch(des1, des2, k=2)
+```
+
+
+```python
+# Now we will apply a ratio test 
+
+good = []
+
+for match1, match2 in matches:
+    if match1.distance < 0.75*match2.distance:
+        good.append([match1])
+```
+
+
+```python
+# The good matches abide by the 75% rule 
+```
+
+
+```python
+print('Length of total matches:', len(matches))
+print('Length of good matches:', len(good))
+```
+
+    Length of total matches: 2136
+    Length of good matches: 39
+
+
+
+```python
+sift_matches = cv2.drawMatchesKnn(apple_jacks, kp1, cereals, kp2, good, None, flags =2)
+display(sift_matches)
+```
+
+
+![output_17_0](https://github.com/norabethhill/Python_2_Portfolio/assets/132499791/3df90164-ad67-41f2-9b7d-5f6f104545da)
+
+
+
+
+```python
+# Now we will try flan base matching 
+```
+
+
+```python
+sift = cv2.SIFT_create()
+
+kp1, des1 = sift.detectAndCompute(apple_jacks, None)
+kp2, des2 = sift.detectAndCompute(cereals, None)
+```
+
+
+```python
+flann_index_KDtree = 0
+index_params = dict(algorithm=flann_index_KDtree, trees = 5)
+search_params = dict(checks=50)
+```
+
+
+```python
+# Now we can set parameters 
+
+flann = cv2.FlannBasedMatcher(index_params, search_params)
+
+matches = flann.knnMatch(des1, des2, k=2)
+
+good = []
+
+for match1, match2, in matches:
+    if match1.distance < 0.75*match2.distance:
+        good.append([match1])
+```
+
+
+```python
+flann_matches = cv2.drawMatchesKnn(apple_jacks, kp1, cereals, kp2, good, None, flags = 0)
+display(flann_matches)
+```
+
+
+![output_22_0](https://github.com/norabethhill/Python_2_Portfolio/assets/132499791/0adf191e-f92f-4db4-b1e3-e6fb4288973e)
+
+
+
+
+```python
+# Now we are adding a mask to it 
+
+sift = cv2.SIFT_create()
+
+kp1, des1 = sift.detectAndCompute(apple_jacks, None)
+kp2, des2 = sift.detectAndCompute(cereals, None)
+```
+
+
+```python
+flann_index_KDtree = 0
+index_params = dict(algorithm= flann_index_KDtree, trees = 5)
+search_param = dict(checks =50)
+```
+
+
+```python
+flann = cv2.FlannBasedMatcher(index_params, search_params)
+
+matches = flann.knnMatch(des1, des2, k = 2)
+```
+
+
+```python
+matchesMask = [[0,0] for i in range(len(matches))]
+```
+
+
+```python
+# 0,0 means pure black will be added 
+```
+
+
+```python
+# Now we can reduce the distance between features to get better matches 
+
+for i, (match1, match2) in enumerate(matches):
+    if match1.distance <0.75*match2.distance:
+        matchesMask[i] = [1,0]
+        
+draw_params = dict(matchColor = (0, 255, 0),
+                   singlePointColor = (255,0,0),
+                   matchesMask = matchesMask,
+                   flags = 0) 
+```
+
+
+```python
+flann_matches = cv2.drawMatchesKnn(apple_jacks, kp1, cereals, kp2, matches, None, **draw_params)
+
+display(flann_matches)
+```
+
+
+![output_29_0](https://github.com/norabethhill/Python_2_Portfolio/assets/132499791/e1d0adfc-bd8b-448b-b17a-a0bba1463138)
+
+
+
+
+```python
+# now we are showing all unique features we identified on both the apple jacks box and on all the cereal boxes 
+# we changed the line color so we can easily see the best box to match 
+```
+
+
+
 
 
 
