@@ -5287,8 +5287,102 @@ for alignment in blast_record.alignments:
 
 
 
+```python
+from Bio.Blast import NCBIWWW
+```
 
 
+```python
+NCBIWWW.email = "neh1023@gmail.com"
+```
+
+
+```python
+result_handle = NCBIWWW.qblast("blastn", "nt", "4436")
+```
+
+
+```python
+from Bio import SeqIO
+```
+
+
+```python
+record = SeqIO.read("MSH2.fasta", format = "fasta")
+```
+
+
+```python
+print(record)
+```
+
+    ID: NC_000002.12:47403067-47709830
+    Name: NC_000002.12:47403067-47709830
+    Description: NC_000002.12:47403067-47709830 Homo sapiens chromosome 2, GRCh38.p14 Primary Assembly
+    Number of features: 0
+    Seq('AAGCTGATTGGGTGTGGTCGCCGTGGCCGGACGCCGCTCGGGGGACGTGGGAGG...TAA')
+
+
+
+```python
+result_handle = NCBIWWW.qblast("blastn", "nt", record.seq)
+```
+
+
+```python
+# we are finding the record sequence 
+```
+
+
+```python
+with open("MSH2.fasta", "w") as out_handle:
+    out_handle.write(result_handle.read())
+result_handle.close()
+
+# now we are reading in the results 
+```
+
+
+```python
+from Bio.Blast import NCBIXML
+```
+
+
+```python
+result_handle = open("my_blast.xml")
+```
+
+
+```python
+# now we are reading in the handle
+blast_record = NCBIXML.read(result_handle)
+```
+
+
+```python
+# now we are looking at E values of 0.04 and up
+E_VALUE_THRESH = 0.04
+```
+
+
+```python
+# This gives us the alignment 
+for alignment in blast_record.alignments:
+    for hsp in alignment.hsps:
+        if hsp.expect < E_VALUE_THRESH:
+            print("****ALIGNMENT****")
+            print("sequence:", alignment.title)
+            print("length:", alignment.length)
+            print("e value:", hsp.expect)
+            print(hsp.query[0:75] + "...")
+            print(hsp.match[0:75] + "...")
+            print(hsp.sbjct[0.75] + "...")
+```
+
+
+```python
+# i was working with the MSH2 gene
+```
 
 
 
